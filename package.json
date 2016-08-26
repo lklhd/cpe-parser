@@ -1,0 +1,49 @@
+{
+  "name": "cpe-parser",
+  "version": "0.1.0",
+  "description": "Parser for Creative Property Expressions (CPEs).",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "gulp clean",
+    "lint": "eslint src",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "prebuild": "npm test",
+    "build": "gulp build",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lklhd/cpe-parser.git"
+  },
+  "author": "Likelihood",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/lklhd/cpe-parser/issues"
+  },
+  "homepage": "https://github.com/lklhd/cpe-parser#readme",
+  "devDependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-standard": "^6.0.0",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-jest": "^0.4.0",
+    "gulp-util": "^3.0.7",
+    "jest": "^14.1.0",
+    "pegjs": "^0.10.0",
+    "through2": "^2.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "env": {
+      "jest": true,
+      "node": true,
+      "es6": true
+    }
+  },
+  "jest": {
+    "automock": false
+  }
+}
