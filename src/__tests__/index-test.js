@@ -17,19 +17,19 @@ describe('index', () => {
       expect(this.parser.parse('')).toEqual('')
     })
 
-    it('parses "abc"', function () {
+    it('parses letters', function () {
       expect(this.parser.parse('abc')).toEqual('abc')
     })
 
-    it('parses "123"', function () {
+    it('parses numbers', function () {
       expect(this.parser.parse('123')).toEqual('123')
     })
 
-    it('parses "123px"', function () {
+    it('parses numbers mixed with letters', function () {
       expect(this.parser.parse('123px')).toEqual('123px')
     })
 
-    it('parses "{{products[1].name}}"', function () {
+    it('parses embedded code', function () {
       expect(this.parser.parse('{{products[1].name}}')).toEqual({
         type: 'ref',
         name: 'products',
@@ -38,7 +38,7 @@ describe('index', () => {
       })
     })
 
-    it('parses "Cool {{products[1].category}}!"', function () {
+    it('parses code embedded into a literal', function () {
       expect(this.parser.parse('Cool {{products[1].category}}!')).toEqual([
         'Cool ',
         {
@@ -51,20 +51,7 @@ describe('index', () => {
       ])
     })
 
-    it('parses "Only {{products[2].quantity}} left!"', function () {
-      expect(this.parser.parse('Only {{products[2].quantity}} left!')).toEqual([
-        'Only ',
-        {
-          type: 'ref',
-          name: 'products',
-          rank: 2,
-          field: 'quantity'
-        },
-        ' left!'
-      ])
-    })
-
-    it('parses "{{1 + products[2].quantity / 2}}-ball"', function () {
+    it('parses integer arithmetic using traditional operator precedence', function () {
       expect(this.parser.parse('{{1 + products[2].quantity / 2}}-ball')).toEqual([
         {
           type: '+',
@@ -84,7 +71,7 @@ describe('index', () => {
       ])
     })
 
-    it('parses "A {{products[3].name}} is in {{products[3].category}}"', function () {
+    it('parses "A multiple embedded data references', function () {
       expect(this.parser.parse('A {{products[3].name}} is in {{products[3].category}}')).toEqual([
         'A ',
         {
@@ -103,19 +90,19 @@ describe('index', () => {
       ])
     })
 
-    it('parses "I need a bracket: {"', function () {
+    it('parses "parses unclosed curly braces as literal text', function () {
       expect(this.parser.parse('I need a bracket: {')).toEqual(
         'I need a bracket: {'
       )
     })
 
-    xit('parses \'I need a bracket: {{""}}\'', function () {
+    xit('parses string literals in embedded code', function () {
       expect(this.parser.parse('I need a bracket: {{""}}')).toEqual(
         'I need a bracket: {'
       )
     })
 
-    it('parses "A literal {{that is not valid code}}"', function () {
+    it('parses invalid code as literal text', function () {
       expect(this.parser.parse('A literal {{that is not valid code}}')).toEqual(
         'A literal {{that is not valid code}}'
       )
