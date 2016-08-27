@@ -44,7 +44,10 @@ EmbeddedCode
   }
 
 Code
-  = Whitespace code : AdditionFollowedByWhitespace * {
+  = Whitespace string : QuotedString Whitespace {
+    return string
+  }
+  / Whitespace code : AdditionFollowedByWhitespace * {
     return normalize(code)
   }
 
@@ -127,3 +130,20 @@ IntegerLiteral
   / [0] {
     return 0
   }
+
+QuotedString
+  = DoubleQuotedString
+
+DoubleQuotedString
+  = '"' chars : DoubleQuotedCharacter * '"' {
+    return chars.join('')
+  }
+
+DoubleQuotedCharacter
+  = "\\\\" {
+    return '\\'
+  }
+  / '\\"' {
+    return '"'
+  }
+  / [^"]

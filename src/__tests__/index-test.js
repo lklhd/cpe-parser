@@ -96,9 +96,16 @@ describe('index', () => {
       )
     })
 
-    xit('parses string literals in embedded code', function () {
-      expect(this.parser.parse('I need a bracket: {{""}}')).toEqual(
-        'I need a bracket: {'
+    it('parses string literals in embedded code', function () {
+      expect(this.parser.parse('I need a bracket: {{"{"}}')).toEqual([
+        'I need a bracket: ',
+        '{'
+      ])
+    })
+
+    it('parses double quoted strings with escape characters', function () {
+      expect(this.parser.parse('{{ "\\\\Say \\"hi\\"" }}')).toEqual(
+        '\\Say "hi"'
       )
     })
 
