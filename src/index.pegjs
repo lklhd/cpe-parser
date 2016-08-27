@@ -1,53 +1,119 @@
-Start = CreativePropertyExpression
+{
+  function normalize (ast) {
+    if (Array.isArray(ast)) {
+      const flattenedAst = ast.filter((e) => e !== '').reduce((a, e) => a.concat(e), [])
+      if (flattenedAst.length === 0) {
+        return ''
+      }
+      if (flattenedAst.length === 1) {
+        return flattenedAst[0]
+      }
+      return flattenedAst
+    }
 
-CreativePropertyExpression = first : StringLiteral rest : EmbeddedCodeFollowedByStringLiteral * {
-  const nested = [first === '' ? [] : first].concat(rest)
-  const flattened = nested.reduce((f, e) => f.concat(e), [])
-  if (flattened.length === 0) {
+    return ast
+  }
+}
+
+Start
+  = CreativePropertyExpression
+
+CreativePropertyExpression
+  = first : StringLiteral rest : EmbeddedCodeFollowedByStringLiteral * {
+    return normalize([first].concat(normalize(rest)))
+  }
+
+StringLiteral
+  = chars : CharacterLiteral * {
+    return chars.join('')
+  }
+
+CharacterLiteral
+  = ! EmbeddedCode char : . {
+    return char
+  }
+
+EmbeddedCodeFollowedByStringLiteral
+  = first : EmbeddedCode second : StringLiteral {
+    return normalize([first, second])
+  }
+
+EmbeddedCode
+  = "{{" code : Code "}}" {
+    return code
+  }
+
+Code
+  = Whitespace code : AdditionFollowedByWhitespace * {
+    return normalize(code)
+  }
+
+Whitespace
+  = ' ' * {
     return ''
   }
-  if (flattened.length === 1) {
-    return flattened[0]
-  }
-  return flattened
-}
 
-StringLiteral = chars : CharacterLiteral * {
-  return chars.join('')
-}
-
-CharacterLiteral = ! EmbeddedCode char : . {
-  return char
-}
-
-EmbeddedCodeFollowedByStringLiteral = first : EmbeddedCode second : StringLiteral {
-  if (second === '') {
+AdditionFollowedByWhitespace
+  = first : Addition Whitespace {
     return first
   }
-  return [first, second]
-}
 
-EmbeddedCode = "{{" code : Code "}}" { return code }
-
-Code = DataRef
-
-DataRef = query : DataRefIdentifier "[" rank : DataRefRank "]." field : DataRefField {
-  return {
-    type: 'ref',
-    name: query,
-    rank: rank,
-    field: field
+Addition
+  = left : DataRef Whitespace operator : [+-] Whitespace right : Addition {
+    return {
+      type: operator,
+      left: left,
+      right: right
+    }
   }
-}
+  / Multiplication
 
-DataRefIdentifier = Identifier
+Multiplication
+  = left : DataRef Whitespace operator : [*/] Whitespace right: Multiplication {
+    return {
+      type: operator,
+      left: left,
+      right: right
+    }
+  }
+  / DataRef
 
-Identifier = first : [_a-zA-Z] rest : [_a-zA-Z0-9] * {
-  return [first].concat(rest).join('')
-}
+DataRefFollowedByWhitespace
+  = first : DataRef Whitespace {
+    return first
+  }
 
-DataRefRank = first : [1-9] rest : [0-9] * {
-  return parseInt([first].concat(rest).join(''))
-}
+DataRef
+  = query : DataRefIdentifier "[" rank : DataRefRank "]." field : DataRefField {
+    return {
+      type: 'ref',
+      name: query,
+      rank: rank,
+      field: field
+    }
+  }
+  / NumberLiteral
 
-DataRefField = Identifier
+DataRefIdentifier
+  = Identifier
+
+Identifier
+  = first : [_a-zA-Z] rest : [_a-zA-Z0-9] * {
+    return [first].concat(rest).join('')
+  }
+
+DataRefRank
+  = first : [1-9] rest : [0-9] * {
+    return parseInt([first].concat(rest).join(''))
+  }
+
+DataRefField
+  = Identifier
+
+NumberLiteral
+  = IntegerLiteral
+
+IntegerLiteral
+  = first : [1-9] rest : [0-9] * {
+    return parseInt([first].concat(rest).join(''))
+  }

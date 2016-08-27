@@ -51,6 +51,39 @@ describe('index', () => {
       ])
     })
 
+    it('parses "Only {{products[2].quantity}} left!"', function () {
+      expect(this.parser.parse('Only {{products[2].quantity}} left!')).toEqual([
+        'Only ',
+        {
+          type: 'ref',
+          name: 'products',
+          rank: 2,
+          field: 'quantity'
+        },
+        ' left!'
+      ])
+    })
+
+    it('parses "{{1 + products[2].quantity / 2}}-ball"', function () {
+      expect(this.parser.parse('{{1 + products[2].quantity / 2}}-ball')).toEqual([
+        {
+          type: '+',
+          left: 1,
+          right: {
+            type: '/',
+            left: {
+              type: 'ref',
+              name: 'products',
+              rank: 2,
+              field: 'quantity'
+            },
+            right: 2
+          }
+        },
+        '-ball'
+      ])
+    })
+
     it('parses "A {{products[3].name}} is in {{products[3].category}}"', function () {
       expect(this.parser.parse('A {{products[3].name}} is in {{products[3].category}}')).toEqual([
         'A ',
@@ -68,6 +101,18 @@ describe('index', () => {
           field: 'category'
         }
       ])
+    })
+
+    it('parses "I need a bracket: {"', function () {
+      expect(this.parser.parse('I need a bracket: {')).toEqual(
+        'I need a bracket: {'
+      )
+    })
+
+    xit('parses \'I need a bracket: {{""}}\'', function () {
+      expect(this.parser.parse('I need a bracket: {{""}}')).toEqual(
+        'I need a bracket: {'
+      )
     })
 
     it('parses "A literal {{that is not valid code}}"', function () {
