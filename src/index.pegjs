@@ -92,7 +92,7 @@ DataRef
       field: field
     }
   }
-  / NumberLiteral
+  / Operand
 
 DataRefIdentifier
   = Identifier
@@ -109,6 +109,12 @@ DataRefRank
 
 DataRefField
   = Identifier
+
+Operand
+  = NumberLiteral
+  / "(" Whitespace expr : Addition Whitespace ")" {
+    return expr
+  }
 
 NumberLiteral
   = IntegerLiteral

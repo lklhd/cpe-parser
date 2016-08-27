@@ -118,5 +118,17 @@ describe('index', () => {
     it('parses the integer zero', function () {
       expect(this.parser.parse('{{0}}')).toBe(0)
     })
+
+    it('parses arithmetic with parentheses', function () {
+      expect(this.parser.parse('{{(3 + 2) * 1}}')).toEqual({
+        type: '*',
+        left: {
+          type: '+',
+          left: 3,
+          right: 2
+        },
+        right: 1
+      })
+    })
   })
 })
