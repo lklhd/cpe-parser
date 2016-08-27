@@ -114,6 +114,10 @@ NumberLiteral
   = IntegerLiteral
 
 IntegerLiteral
-  = first : [1-9] rest : [0-9] * {
-    return parseInt([first].concat(rest).join(''))
+  = sign : [+-] ? first : [1-9] rest : [0-9] * {
+    const unsignedInt = parseInt([first].concat(rest).join(''))
+    return sign === '-' ? -unsignedInt : unsignedInt
+  }
+  / [0] {
+    return 0
   }

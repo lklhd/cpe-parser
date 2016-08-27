@@ -107,5 +107,16 @@ describe('index', () => {
         'A literal {{that is not valid code}}'
       )
     })
+
+    it('parses negative integers', function () {
+      expect(this.parser.parse('A number {{-3}}')).toEqual([
+        'A number ',
+        (-3)
+      ])
+    })
+
+    it('parses the integer zero', function () {
+      expect(this.parser.parse('{{0}}')).toBe(0)
+    })
   })
 })
