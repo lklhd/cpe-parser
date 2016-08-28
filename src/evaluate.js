@@ -53,7 +53,7 @@ function evaluateAST (ast, env) {
 
 module.exports = function (parse) {
   return {
-    fromString: (string) => evaluateAST(parse(string)),
+    fromString: (string, env) => evaluateAST(parse(string), env),
     fromAST: evaluateAST
   }
 }

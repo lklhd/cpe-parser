@@ -6,10 +6,15 @@ describe('evaluate', () => {
     })
 
     it('parses the input into an AST before evaluating', function () {
-      this.parse.mockReturnValueOnce('abc')
+      this.parse.mockReturnValueOnce(['abc', { type: 'ref', name: 'q', rank: 1, field: 'a' }])
 
-      expect(this.evaluate.fromString('abc')).toBe('abc')
-      expect(this.parse).toBeCalledWith('abc')
+      const env = {
+        queries: {
+          q: [ { a: '123' } ]
+        }
+      }
+      expect(this.evaluate.fromString('abc{{q[1].a}}', env)).toBe('abc123')
+      expect(this.parse).toBeCalledWith('abc{{q[1].a}}')
     })
   })
 
