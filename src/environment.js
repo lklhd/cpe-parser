@@ -34,15 +34,11 @@ function resolveQuery (env) {
       ? env.queries
       : queriesObjectReader.bind(null, env.queries)
 
-    try {
-      const value = reader(name, rank, field)
-      if (['number', 'string'].indexOf(typeof value) === -1) {
-        return ''
-      }
-      return value
-    } catch (err) {
+    const value = reader(name, rank, field)
+    if (['number', 'string'].indexOf(typeof value) === -1) {
       return ''
     }
+    return value
   }
 }
 

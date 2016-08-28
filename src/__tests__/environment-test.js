@@ -60,6 +60,11 @@ describe('environment', () => {
         expect(environment.query(this.env)('name', 1, 'field')).toBe('')
       })
 
+      it('does not swallow exceptions from the function', function () {
+        this.env.queries.mockImplementation(() => { throw new Error() })
+        expect(() => environment.query(this.env)('name', 1, 'field')).toThrowError()
+      })
+
       it('returns the value from the queries function', function () {
         this.env.queries.mockReturnValueOnce('abc')
         expect(environment.query(this.env)('name', 1, 'field')).toBe('abc')
