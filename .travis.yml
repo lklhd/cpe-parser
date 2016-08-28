@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - node
+deploy:
+  provider: npm
+  email: wugarrett@gmail.com
+  api_key:
+    secure: Jq2hgzefZ978ByBUCxO8QThuyD7MYDovHAQxWmlhSZPkskuGyMrvuR5MLbZYCpHy9r7thFGpsjb3EwlkRmCX3f+ER4Q/HLm9+zAaEDOzdx9hcNOizf3SdiS/50pnJ8eMgpsiti9D5awPMmIOdri0a82I0WcOai9E+eROkwSO9+CF3yIZfmCH/m9zm14s3FDRJcu9J5pNmSsSUxRZTtAQc2vePQ0INuBXF+byXDhCp0mdNIBDFSlQnF+ElX7P5TJUgTxDo25Ch/EnDoFjxuvRABMFRzzecpSy/pzjvQtPd5iTdgTQKdstRBq/E4nTsrMf8niVtRdkIS5Sxi0D9ibWiJiBklpqd3kfdYmIlsJkgHTkt904ERTxHG8+WEP65CmZL5KpVvY9ouEcQ0PdaEi8tICvb9lR2pty5VmydPiZCCdlWua67MePwnQ6mV2GhUexxlTXUoaLRtyMHFr8sI4/TMbR+aqQpGxOXKD6ZDOBLlDX9pLBcgQ/OzHrKSclD0RFUFTZChKRl67YmsyUrAVdNYFHhaDa0YIe4FGe2OHBei5qFMfu1oawAP5Nkr6AUG75XAjkqJf0KJZVbbkaSDcvypOAX4RK5L3TKNgnd1WLBVY+0mqIjZmGLmxrRUIfsxrbQbkTpC21H5HLJM3mZsZcfbr91GZmIr+a1qFCvH1IUVs=
+  on:
+    tags: true
+    repo: lklhd/cpe-parser
