@@ -17,7 +17,7 @@
     "url": "git+https://github.com/lklhd/cpe-parser.git"
   },
   "author": "Likelihood",
-  "license": "UNLICENSED",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/lklhd/cpe-parser/issues"
   },
@@ -45,6 +45,8 @@
   "jest": {
     "automock": false,
     "testEnvironment": "node",
-    "testPathDirs": ["dist"]
+    "testPathDirs": [
+      "dist"
+    ]
   }
 }
