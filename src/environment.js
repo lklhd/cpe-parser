@@ -8,6 +8,9 @@
  * @return Resolved value, or '' if there was an error.
  */
 function queriesObjectReader (queries, name, rank, field) {
+  if (!Object.prototype.hasOwnProperty.call(queries, name)) {
+    return ''
+  }
   const items = queries[name]
   if (rank - 1 >= items.length) {
     return ''
@@ -27,7 +30,7 @@ function queriesObjectReader (queries, name, rank, field) {
  */
 function resolveQuery (env) {
   return (name, rank, field) => {
-    if (!env || !env.queries || !Object.prototype.hasOwnProperty.call(env.queries, name)) {
+    if (!env || !env.queries) {
       return ''
     }
     const reader = typeof env.queries === 'function'
