@@ -1,3 +1,5 @@
+const environment = require('./environment')
+
 /**
  * Evaluates an AST for a Creative Property Expression (CPE)
  * in an environment.
@@ -28,15 +30,7 @@ function evaluateAST (ast, env) {
             typeof ast.field !== 'string') {
           throw new Error(`Could not evaluate invalid AST: ${JSON.stringify(ast)}`)
         }
-
-        if (!env || !env.queries || !(ast.name in env.queries)) {
-          return ''
-        }
-        const items = env.queries[ast.name]
-        if (ast.rank - 1 >= items.length) {
-          return ''
-        }
-        return env.queries[ast.name][ast.rank - 1][ast.field] || ''
+        return environment.query(env)(ast.name, ast.rank, ast.field)
       case '+':
         return Number(recurse(ast.left)) + Number(recurse(ast.right))
       case '-':
