@@ -9,3 +9,4 @@ deploy:
   on:
     tags: true
     repo: lklhd/cpe-parser
+  skip_cleanup: true
