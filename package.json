@@ -6,11 +6,11 @@
   "scripts": {
     "clean": "gulp clean",
     "lint": "eslint src",
-    "pretest": "npm run lint",
-    "test": "jest",
-    "prebuild": "npm test",
+    "prebuild": "npm run lint",
     "build": "gulp build",
-    "prepublish": "npm run build"
+    "pretest": "npm run build",
+    "test": "jest",
+    "prepublish": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,6 @@
     "eslint-plugin-standard": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
-    "gulp-jest": "^0.4.0",
     "gulp-util": "^3.0.7",
     "jest": "^14.1.0",
     "pegjs": "^0.10.0",
@@ -44,6 +43,8 @@
     }
   },
   "jest": {
-    "automock": false
+    "automock": false,
+    "testEnvironment": "node",
+    "testPathDirs": ["dist"]
   }
 }
