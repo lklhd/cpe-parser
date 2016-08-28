@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lklhd/cpe-parser.svg?branch=master)](https://travis-ci.org/lklhd/cpe-parser)
+
 Creative Property Expression Parser/Evaluator
 =============================================
 
