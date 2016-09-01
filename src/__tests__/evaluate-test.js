@@ -24,7 +24,7 @@ describe('evaluate', () => {
       this.query = jest.fn(() => {
         return this.resolve
       })
-      jest.mock('../environment', () => ({
+      jest.doMock('../environment', () => ({
         query: this.query
       }))
       this.eval = require('../evaluate')().fromAST

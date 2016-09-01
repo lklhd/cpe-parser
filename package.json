@@ -23,11 +23,13 @@
   },
   "homepage": "https://github.com/lklhd/cpe-parser#readme",
   "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
     "eslint": "^3.4.0",
     "eslint-config-standard": "^6.0.0",
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-standard": "^2.0.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-util": "^3.0.7",
     "jest": "^14.1.0",
@@ -47,6 +49,11 @@
     "testEnvironment": "node",
     "testPathDirs": [
       "dist"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015"
     ]
   }
 }
