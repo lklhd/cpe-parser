@@ -1,6 +1,6 @@
 {
   "name": "cpe-parser",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Parser for Creative Property Expressions (CPEs).",
   "main": "dist/index.js",
   "scripts": {
