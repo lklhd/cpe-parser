@@ -25,7 +25,7 @@ function evaluateAST (ast, env) {
     switch (ast.type) {
       case 'ref':
         if (typeof ast.name !== 'string' ||
-            !Number.isInteger(ast.rank) ||
+            !(ast.rank === (ast.rank ^ 0)) ||
             ast.rank - 1 < 0 ||
             typeof ast.field !== 'string') {
           throw new Error(`Could not evaluate invalid AST: ${JSON.stringify(ast)}`)
